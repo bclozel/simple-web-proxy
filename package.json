@@ -1,0 +1,31 @@
+{
+  "name": "simple-web-proxy",
+  "version": "0.0.1",
+  "description": "A simple, efficient and non-intrusive HTTP proxy using Nodejitsu's http-proxy",
+  "author": "Brian Clozel <brian.clozel@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/bclozel/simple-web-proxy.git"
+  },
+  "keywords": [
+    "non-intrusive",
+    "proxy",
+    "web",
+    "http"
+  ],
+  "dependencies": {
+    "http-proxy": "0.8.2",
+    "pkginfo": "0.2.3",
+    "optimist": "0.3.4",
+    "async": "0.1.22"
+  },
+  "devDependencies": {
+  },
+  "main": "./lib/simple-web-proxy",
+  "bin": {
+    "simple-web-proxy": "./bin/simple-web-proxy"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  }
+}

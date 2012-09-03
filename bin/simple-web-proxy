@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+
+var simpleWebProxy = require('../lib/simple-web-proxy'),
+	http = require('http'),
+	argv = require('optimist').argv,
+  util = require('util');
+
+
+var help = [
+    "usage: simple-web-proxy [options] ",
+    "",
+    "Starts a simple-web-proxy server using the specified command-line options",
+    "",
+    "options:",
+    "  --port   PORT       Port that the proxy server should run on",
+    "  --config OUTFILE    Location of the configuration file for the proxy server",
+    "  --silent            Silence the log output from the proxy server",
+    "  -h, --help          You're reading it right now!"
+].join('\n');
+
+if (argv.h || argv.help) {
+  return util.puts(help);
+}
+
+var port = argv.port || 3128;
+
+
+//
+// Parsing config
+//
+var config = {};
+if (argv.config) {
+  try {
+    var data = fs.readFileSync(argv.config);
+    config = JSON.parse(data.toString());
+  } catch (ex) {
+    util.puts('Error starting simple-web-proxy: ' + ex);
+    process.exit(1);
+  }
+}
+
+//
+// Check to see if we should silence the logs
+//
+config.silent = typeof argv.silent !== 'undefined' ? argv.silent : config.silent;
+
+//
+// Start the server
+//
+var server = simpleWebProxy.createServer(config);
+server.listen(port);
+
+//
+// Notify that the server is started
+//
+if (!config.silent) {
+  util.puts('simple-web-proxy server now listening on port: ' + port);
+}
